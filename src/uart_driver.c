@@ -42,14 +42,6 @@ bool_t uart_cofig( uart_drive_t *uart_drive ){
 		printf("Modo texto no activado\r\n");
 	}
 
-	/* Configuración de modo texto para recibir SMS */
-	if( ag9_syntax( uart_drive->uart_value ) ){
-		printf("Modo texto activado correctamente\r\n");
-	}
-	else{
-		printf("Modo texto no activado\r\n");
-	}
-
 	/* Verifica si está attachado a la red */
 	if( ag9_attach( uart_drive->uart_value ) ){
 		printf("Modulo atachado a la red\r\n");

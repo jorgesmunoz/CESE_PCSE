@@ -32,8 +32,9 @@ typedef struct{
 	char byte_ring;
 }uart_drive_t;
 
-bool_t af9_test( int32_t uart );
-bool_t af9_attach( int32_t uart );
+bool_t ag9_test( int32_t uart );
+bool_t ag9_attach( int32_t uart );
+bool_t ag9_syntax( int32_t uart );
 bool_t uart_cofig( uart_drive_t *uart_drive );
 void functionRX( void * );
 

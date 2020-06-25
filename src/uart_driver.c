@@ -26,38 +26,60 @@ bool_t uart_cofig( uart_drive_t *uart_drive ){
 	uartInterrupt(uart_drive->uart_value, TRUE);
 
 
-//	/* Envia comando AT al modulo para verificar si funciona */
-//	if( af9_test( uart_drive->uart_value ) ){
-//		printf("Modulo funciona correctamente\r\n");
-//	}
-//	else{
-//		printf("Modulo af9 no funciona\r\n");
-//	}
-//
-//	/* Verifica si está attachado a la red */
-//	if( af9_attach( uart_drive->uart_value ) ){
-//		printf("Modulo atachado a la red\r\n");
-//	}
-//	else{
-//		printf("Modulo af9 no esta atachado a la red\r\n");
-//	}
+	/* Envia comando AT al modulo para verificar si funciona */
+	if( ag9_test( uart_drive->uart_value ) ){
+		printf("Modulo funciona correctamente\r\n");
+	}
+	else{
+		printf("Modulo ag9 no funciona\r\n");
+	}
+
+	/* Configuración de modo texto para recibir SMS */
+	if( ag9_syntax( uart_drive->uart_value ) ){
+		printf("Modulo texto activado correctamente\r\n");
+	}
+	else{
+		printf("Modo texto no activado\r\n");
+	}
+
+	/* Configuración de modo texto para recibir SMS */
+	if( ag9_syntax( uart_drive->uart_value ) ){
+		printf("Modo texto activado correctamente\r\n");
+	}
+	else{
+		printf("Modo texto no activado\r\n");
+	}
+
+	/* Verifica si está attachado a la red */
+	if( ag9_attach( uart_drive->uart_value ) ){
+		printf("Modulo atachado a la red\r\n");
+	}
+	else{
+		printf("Modulo af9 no esta atachado a la red\r\n");
+	}
 
 
 	return TRUE;
 
 }
 
-//bool_t af9_test( int32_t uart )
-//{
-//   uartWriteString( uart, "AT\r\n" );
-//   return waitForReceiveStringOrTimeoutBlocking( uart, "OK\r\n", strlen("OK\r\n"), 1000 );
-//}
-//
-//bool_t af9_attach( int32_t uart )
-//{
-//   uartWriteString( uart, "AT+CGATT?\r\n" );
-//   return waitForReceiveStringOrTimeoutBlocking( uart, "OK\r\n", strlen("OK\r\n"), 1000 );
-//}
+bool_t ag9_test( int32_t uart )
+{
+   uartWriteString( uart, "AT\r\n" );
+   return waitForReceiveStringOrTimeoutBlocking( uart, "OK\r\n", strlen("OK\r\n"), 1000 );
+}
+
+bool_t ag9_syntax( int32_t uart )
+{
+   uartWriteString( uart, "AT+CMGF=1\r\n" );
+   return waitForReceiveStringOrTimeoutBlocking( uart, "OK\r\n", strlen("OK\r\n"), 1000 );
+}
+
+bool_t ag9_attach( int32_t uart )
+{
+   uartWriteString( uart, "AT+CGATT?\r\n" );
+   return waitForReceiveStringOrTimeoutBlocking( uart, "OK\r\n", strlen("OK\r\n"), 1000 );
+}
 
 void functionRX( void *param )
 {
